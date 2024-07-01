@@ -1,6 +1,6 @@
 
 variable "domain" {
-  description = "domain hosted in cloudflare"
+  description = "the domain hosted in cloudflare"
   type        = string
   nullable    = false
 }
