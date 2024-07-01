@@ -22,7 +22,7 @@ const devConfig = {
             apply(compiler) {
               compiler.hooks.beforeRun.tapAsync('MyCustomBeforeRunPlugin', function(compiler, callback) {
                 // debugger
-                console.dir(compiler.options)
+                // console.dir(compiler.options)
                 callback()
               })
             },

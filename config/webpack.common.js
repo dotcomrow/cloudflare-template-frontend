@@ -1,9 +1,6 @@
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const path = require('path');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
-const fs = require('fs');
-const dotenv = require('dotenv');
-const webpack = require('webpack');
 
 module.exports = (env) => {
     return {
