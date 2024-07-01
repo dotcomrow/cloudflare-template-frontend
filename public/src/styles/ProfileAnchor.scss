@@ -1,0 +1,51 @@
+.profile-placeholder {
+    border-radius: 50%;
+    width: 48px;
+    height: 48px;
+    background: white;
+    background-position: 50% 50%;
+    background-size:100% 100%;
+    cursor: pointer;
+}
+
+.popover {
+    border-top-width: 1px;
+    border-right-width: 1px;
+    border-bottom-width: 1px;
+    border-left-width: 1px;
+    border-top-style: solid;
+    border-right-style: solid;
+    border-bottom-style: solid;
+    border-left-style: solid;
+    border-top-color: grey;
+    border-right-color: grey;
+    border-bottom-color: grey;
+    border-left-color: grey;
+    text-align: center;
+    padding-top: 12px;
+    max-height: 100%;
+    overflow-x: hidden;
+    overflow-y: hidden;
+    font-size: initial;
+    color: initial;
+    background-color: initial;
+}
+
+.popoverWindow {
+    padding-left: 20px;
+    padding-right: 20px;
+    padding-bottom: 10px;
+    display: flex;
+    flex-direction: column;
+}
+
+.overlay {
+    background-color:transparent;
+    position:fixed;
+    top:0;
+    left:0;
+    right:0;
+    bottom:0;
+    display:none;
+    z-index:10;
+}

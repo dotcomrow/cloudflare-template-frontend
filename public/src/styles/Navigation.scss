@@ -1,0 +1,53 @@
+@import 'node_modules/bootstrap/scss/functions';
+@import 'node_modules/bootstrap/scss/variables';
+@import 'node_modules/bootstrap/scss/mixins';
+
+.navigation {
+    .nav-links-container {
+        display: flex;
+    }
+
+    #navigation-bar {
+        margin-left: -43px;
+    }
+
+    .nav-iconButtons {
+        display: flex;
+        padding-left:5rem;
+    }
+
+    .nav-menu {
+        display:none;
+    }
+
+    .nav-home {
+        display: none;
+    }
+
+    .nav-home-link {
+        color: black;
+    }
+
+    .navigation-container {
+        background-color: black;
+        width: 100%;
+    }
+}
+
+.page-container {
+    @include media-breakpoint-down(lg) {
+        padding-left: 8% !important;
+        padding-right: 8% !important;
+    }
+
+    @include media-breakpoint-down(lg) {
+        padding-left: 2.5rem !important;
+        padding-right: 2.5rem !important;
+    }
+
+    @include media-breakpoint-down(md) {
+        padding-left: 1.25rem !important;
+        padding-right: 1.25rem !important;
+    }
+}
+

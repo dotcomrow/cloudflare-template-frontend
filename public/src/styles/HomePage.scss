@@ -1,0 +1,54 @@
+.body-height {
+    .module-wrapper {
+        @media(min-width:1200px) {
+            div {
+                height: 100%;
+            }
+            .card {
+                div {
+                    height: max-content;
+                }
+
+            }
+        }
+    }
+
+    .module-container {
+        padding: 1.53rem 1.25rem;
+        @include media-xl-min() {
+            padding: 1.563rem 4.8rem !important;
+        }
+        @include media-md-min() {
+            padding: 1.563rem 2.313rem !important;
+        }
+
+        > div {
+            width: 100%;
+        }
+    }
+}
+
+
+
+footer {
+    position: fixed !important;
+    bottom: 0;
+    width: 100%;
+    z-index: 500;
+    flex: none;
+  }
+
+header {
+    position: fixed !important;
+    top: 0;
+    width: 100%;
+    z-index: 500;
+    flex: none;
+}
+
+main {
+    overflow-y: scroll;
+    -webkit-overflow-scrolling: touch;
+    flex: auto;
+    height: 100vh;
+}

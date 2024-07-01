@@ -1,0 +1,39 @@
+.loader {
+  position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  overflow: visible;
+  z-index: 700;
+}
+
+.loaderContainer {
+  position: fixed;
+  top: 40%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  animation: fade-in 4s;
+
+  @keyframes fade-in {
+      from {
+        opacity: 0;
+      }
+      to {
+        opacity: 100;
+      }
+    }
+}
+
+.loaderContainerTxt {
+  position: fixed;
+  top: 70%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+
+}
+
+.loader-hide {
+  opacity: 0;
+  transition: all 250ms linear 2s; // <- the last value defines transition-delay
+}
