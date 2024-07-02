@@ -105,6 +105,11 @@ jobs:
           --data @payload.json \
           https://app.terraform.io/api/v2/vars
 
+      - name: Build project
+        run: |
+          npm install
+          npm run build
+
       - name: Commit
         run: |
           cd release
