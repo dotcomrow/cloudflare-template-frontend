@@ -19,17 +19,15 @@ function ProfileComponent({ vars }) {
     const [darkMode, setDarkMode] = useState(false);
     const dispatch = useDispatch();
     const darkModeState = useSelector((state) => {
-        if (state.user && state.user.user_settings && state.user.user_settings.preferences) {
-            var prefString = JSON.parse(state.user.user_settings.preferences.preferences.replace(/'/g, '"'));
-            return prefString.darkMode;
+        if (state.user && state.user.user_settings && state.user.user_settings.preferences && state.user.user_settings.preferences.darkMode) {
+            return state.user.user_settings.preferences.darkMode;
         } else {
             return false;
         }
     });
     const systemSettingState = useSelector((state) => {
-        if (state.user && state.user.user_settings && state.user.user_settings.preferences) {
-            var prefString = JSON.parse(state.user.user_settings.preferences.preferences.replace(/'/g, '"'));
-            return prefString.systemSetting;
+        if (state.user && state.user.user_settings && state.user.user_settings.preferences && state.user.user_settings.preferences.systemSetting) {
+            return state.user.user_settings.preferences.systemSetting;
         } else {
             return false;
         }
@@ -57,20 +55,20 @@ function ProfileComponent({ vars }) {
 
     useEffect(() => {
         if (user && user.user_settings && user.user_settings.preferences) {
-            var prefString = user.user_settings.preferences.preferences.replace(/'/g, '"');
-            var preferences = JSON.parse(prefString)
-            if (preferences['systemSetting'] != null) {
-                setSystemSetting((preferences['systemSetting'] === 'true') ? true : false)
+            if (user.user_settings.preferences.systemSetting) {
+                setSystemSetting((user.user_settings.preferences.systemSetting === 'true') ? true : false)
             } else {
                 setSystemSetting(false)
             }
-            if (preferences['systemSetting'] === 'true') {
-                setDarkModeDisabled(true)
-            } else {
-                setDarkModeDisabled(false)
+            if (user.user_settings.preferences.systemSetting) {
+                if (user.user_settings.preferences.systemSetting === 'true') {
+                    setDarkModeDisabled(true)
+                } else {
+                    setDarkModeDisabled(false)
+                }
             }
-            if (preferences['darkMode'] != null) {
-                setDarkModeToggle((preferences['darkMode'] === 'true') ? true : false)
+            if (user.user_settings.preferences.darkMode) {
+                setDarkModeToggle((user.user_settings.preferences.darkMode === 'true') ? true : false)
             }
         }
     }, [user])

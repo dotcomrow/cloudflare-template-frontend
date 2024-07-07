@@ -16,15 +16,12 @@ export const logout = () => {
 
 export const getDarkMode = (user) => {
   if (user && user.user_settings && user.user_settings.preferences) {
-    var prefString = JSON.parse(
-      user.user_settings.preferences.preferences.replace(/'/g, '"')
-    );
-    if (prefString.systemSetting === "true") {
+    if (user.user_settings.preferences.systemSetting === "true") {
       return window.matchMedia("(prefers-color-scheme: dark)").matches
         ? true
         : false;
     } else {
-      return prefString.darkMode === "true" ? true : false;
+      return user.user_settings.preferences.darkMode === "true" ? true : false;
     }
   } else {
     return false;

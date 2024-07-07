@@ -4,8 +4,8 @@
   "main": "index.js",
   "path": "build",
   "dependencies": {
-    "react": "^17.0.1",
-    "react-dom": "^17.0.1",
+    "react": "^17.0.2",
+    "react-dom": "^17.0.2",
     "ag-grid-community": "^27.1.1",
     "ag-grid-react": "^27.1.1",
     "axios": "^1.6.0",

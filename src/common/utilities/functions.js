@@ -12,6 +12,7 @@ export const displayError = ({ detail, error }) => {
               later
             </p>
             <p>Exception: {error.message}</p>
+            <p>Traceback: {error.stack}</p>
             <p>{detail ? "Detail: " + detail : ""}</p>
             <p>
               Click <a href="/">here</a> to return to homepage and try again.
