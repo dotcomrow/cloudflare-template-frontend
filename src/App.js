@@ -5,10 +5,8 @@ import "./style.scss";
 import { PersistGate } from "redux-persist/integration/react";
 import store, { persistor } from "./common/store/store";
 import { Provider } from "react-redux";
-import { GlobalStore } from 'redux-micro-frontend';
 
 function renderToDOM() {
-  GlobalStore.Get().RegisterStore("config", store);
   ReactDOM.render(
     <React.StrictMode>
       <Provider store={store}>
