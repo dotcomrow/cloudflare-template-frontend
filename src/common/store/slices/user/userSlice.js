@@ -32,10 +32,9 @@ export const updatePreference = createAsyncThunk(
   "user/updatePreference",
   async (arg, thunkAPI) => {
 
-    var currentPreferences = thunkAPI.getState().user.user_settings.preferences;
-
+    var prefs = JSON.parse(JSON.stringify(thunkAPI.getState().user.user_settings.preferences));
     Object.keys(arg).forEach((key) => {
-      currentPreferences[key] = arg[key];
+      prefs[key] = arg[key];
     });
     return await axios(preferencesUrl, {
       method: "PUT",
@@ -43,7 +42,7 @@ export const updatePreference = createAsyncThunk(
         "Content-Type": "application/json",
         Authorization: `Bearer ${thunkAPI.getState().user.access_token}`,
       },
-      data: currentPreferences,
+      data: prefs,
     })
       .then((response) => response.data)
       .catch((error) => {
