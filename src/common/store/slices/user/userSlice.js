@@ -106,8 +106,7 @@ export const loginUser = createAsyncThunk(
             resolve(params);
             thunkAPI.dispatch(fetchGoogleProfile(params.access_token));
             thunkAPI.dispatch(fetchPreferences({
-              'access_token':params.access_token, 
-              'id_token': params.id_token
+              'access_token':params.access_token
             }));
             localStorage.removeItem(STATE);
           });
