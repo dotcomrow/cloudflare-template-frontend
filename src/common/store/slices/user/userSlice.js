@@ -129,7 +129,7 @@ export const loginUser = createAsyncThunk(
           state: localStorage.getItem(STATE),
           include_granted_scopes: "true",
           nonce: "testnonce",
-          response_type: "token id_token",
+          response_type: "token",
         };
 
         // Add form parameters as hidden input values.
@@ -194,20 +194,13 @@ export const userProfileSlice = createSlice({
     });
     builder.addCase(updatePreference.fulfilled, (state, action) => {
       if (action.payload) {
-        var currentPrefsObj = state.user_settings.preferences.preferences.replace(
-          /'/g,
-          '"'
-        );
-        var currentPreferences = JSON.parse(currentPrefsObj);
+        var currentPreferences = state.user_settings.preferences;
 
-        var newPrefsObj = action.payload.preferences.preferences.replace(/'/g, '"');
-        var newPreferences = JSON.parse(newPrefsObj);
+        var newPreferences = action.payload.preferences;
         Object.keys(newPreferences).forEach((key) => {
           currentPreferences[key] = newPreferences[key];
         });
-        state.user_settings.preferences.preferences = JSON.stringify(
-          currentPreferences
-        ).replace(/"/g, "'");
+        state.user_settings.preferences = currentPreferences;
       }
     });
   },
