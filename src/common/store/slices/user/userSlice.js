@@ -31,11 +31,8 @@ export const getDarkMode = (user) => {
 export const updatePreference = createAsyncThunk(
   "user/updatePreference",
   async (arg, thunkAPI) => {
-    var currentPrefsObj = thunkAPI.getState().user.user_settings.preferences.preferences.replace(
-      /'/g,
-      '"'
-    );
-    var currentPreferences = JSON.parse(currentPrefsObj);
+
+    var currentPreferences = thunkAPI.getState().user.user_settings.preferences;
 
     Object.keys(arg).forEach((key) => {
       currentPreferences[key] = arg[key];
@@ -63,7 +60,6 @@ export const fetchPreferences = createAsyncThunk(
       headers: {
         "Content-Type": "application/json",
         Authorization: `Bearer ${arg.access_token}`,
-        Identity: arg.id_token,
       },
     })
       .then((response) => {
