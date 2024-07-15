@@ -127,7 +127,6 @@ export const loginUser = createAsyncThunk(
           scope: "email profile openid",
           state: localStorage.getItem(STATE),
           include_granted_scopes: "true",
-          nonce: "testnonce",
           response_type: "token",
         };
 
