@@ -1,18 +1,14 @@
-locals {
-  project_name = "${var.project_name}"
-}
-
 resource "cloudflare_pages_domain" "app" {
   account_id   = var.cloudflare_account_id
-  project_name = local.project_name
-  domain       = "${local.project_name}.${var.domain}"
+  project_name = var.project_name
+  domain       = "${var.project_name}.${var.domain}"
 
   depends_on = [cloudflare_pages_project.app]
 }
 
 resource "cloudflare_record" "app" {
   zone_id         = var.cloudflare_zone_id
-  name            = local.project_name
+  name            = var.project_name
   value           = cloudflare_pages_project.app.domains[0]
   type            = "CNAME"
   ttl             = 3600
@@ -21,13 +17,13 @@ resource "cloudflare_record" "app" {
 
 resource "cloudflare_pages_project" "app" {
   account_id        = var.cloudflare_account_id
-  name              = local.project_name
+  name              = var.project_name
   production_branch = "gh-pages"
   source {
     type = "github"
     config {
       owner                         = "dotcomrow"
-      repo_name                     = local.project_name
+      repo_name                     = var.project_name
       production_branch             = "gh-pages"
       pr_comments_enabled           = true
       deployments_enabled           = true
