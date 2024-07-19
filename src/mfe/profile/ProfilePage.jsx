@@ -8,7 +8,7 @@ import { Tabs, Tab } from 'dtk/Tabs';
 import Toggle from 'dtk/Toggle';
 import { useSelector, useDispatch } from "react-redux";
 
-function ProfileComponent({ vars }) {
+function ProfilePage({ vars }) {
 
     const [selected, setSelected] = useState(0)
     const [systemSetting, setSystemSetting] = useState(false)
@@ -192,4 +192,4 @@ function ProfileComponent({ vars }) {
     );
 }
 
-export default ProfileComponent;
+export default ProfilePage;

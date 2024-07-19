@@ -1,6 +1,7 @@
 import React from "react";
 
 export const displayError = ({ detail, error }) => {
+
   return (
     <div className="col-12 pt-5 pb-5">
       <div className="tile container-fluid col-4 module-container">

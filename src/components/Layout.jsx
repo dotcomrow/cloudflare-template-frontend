@@ -11,7 +11,6 @@ import SessionTimeout from './modals/SessionTimeout';
 import Header from "./globalnav/layout/header/header";
 import Footer from "./globalnav/layout/footer/footer";
 import { BaseStyles } from "dtk/BaseStyles";
-import ProfileComponent from '../mfe/profile/ProfileComponent';
 import { displayError } from '../common/utilities/functions';
 import { LOADER_KEY } from "../common/utilities/constants";
 import { WifiLoader } from "react-awesome-loaders-py3";
@@ -19,6 +18,8 @@ import { useDispatch, useSelector } from 'react-redux';
 import { loginUser, getDarkMode } from "../common/store/slices/user/userSlice";
 import { H2 } from "dtk/Typography";
 
+import ProfilePage from '../mfe/profile/ProfilePage';
+import HomePage from '../mfe/home/HomePage';
 
 const Main = function Layout() {
 
@@ -115,7 +116,10 @@ const Main = function Layout() {
                         <div className="container-fluid" style={{ "height": "100%" }}>
                             <Routes>
                                 <Route path="profile" element={
-                                    <ProfileComponent />
+                                    <ProfilePage />
+                                }></Route>
+                                <Route path="home" element={
+                                    <HomePage />
                                 }></Route>
                                 <Route
                                     path="*"
