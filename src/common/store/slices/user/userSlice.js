@@ -39,10 +39,6 @@ export const updatePreference = createAsyncThunk(
     });
     return await axios(preferencesUrl, {
       method: "PUT",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${thunkAPI.getState().user.access_token}`,
-      },
       data: prefs,
     })
       .then((response) => response.data)
@@ -57,10 +53,6 @@ export const fetchPreferences = createAsyncThunk(
   async (arg, thunkAPI) => {
     return await axios(preferencesUrl, {
       method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${arg.access_token}`,
-      },
     })
       .then((response) => {
         return response.data
