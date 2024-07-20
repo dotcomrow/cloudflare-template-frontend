@@ -33,7 +33,7 @@ export default function HomePage() {
                             axios.post('/nodejs-cloudflare-logging-service', 
                                 { 
                                     "severity": "INFO",
-                                    "message":{
+                                    "payload":{
                                         "message": "This is a test log message"
                                     }
                                 }).then((response) => {
