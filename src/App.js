@@ -5,6 +5,11 @@ import "./style.scss";
 import { PersistGate } from "redux-persist/integration/react";
 import store, { persistor } from "./common/store/store";
 import { Provider } from "react-redux";
+import axios from 'axios';
+
+axios.defaults.baseURL = 'https://api-gateway.suncoast.systems';
+// axios.defaults.headers.common['Authorization'] = 'AUTH TOKEN';
+axios.defaults.headers.post['Content-Type'] = 'application/json';
 
 function renderToDOM() {
   ReactDOM.render(
