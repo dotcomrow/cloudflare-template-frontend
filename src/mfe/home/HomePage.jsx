@@ -2,8 +2,7 @@ import React, { Suspense, useEffect, useState } from "react";
 import { ErrorBoundary } from "react-error-boundary";
 import { displayError } from '../../common/utilities/functions';
 import { updatePreference, getDarkMode } from '../../common/store/slices/user/userSlice';
-import Card from 'dtk/Card';
-import { Button } from 'dtk/Button';
+import Button from 'dtk/Button';
 import { H3, H2, Subtitle } from 'dtk/Typography';
 import { useSelector, useDispatch } from "react-redux";
 import axios from "axios";
@@ -31,7 +30,13 @@ export default function HomePage() {
                     <H2 darkMode={darkMode}>Home Page</H2>
                     <div>
                         <Button onClick={() => {
-                            axios.post('/api/test', { "test": "test" }).then((response) => {
+                            axios.post('/nodejs-cloudflare-logging-service', 
+                                { 
+                                    "severity": "INFO",
+                                    "message":{
+                                        "message": "This is a test log message"
+                                    }
+                                }).then((response) => {
                                 console.log(response.data);
                             });
                         }}>Test log</Button>
