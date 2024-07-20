@@ -10,6 +10,36 @@ import axios from 'axios';
 axios.defaults.baseURL = 'https://api-gateway.suncoast.systems';
 axios.defaults.headers.post['Content-Type'] = 'application/json';
 
+axios.interceptors.request.use(request => {
+  // console.log(request);
+  // Edit request config
+  return request;
+}, error => {
+  axios.post('/nodejs-cloudflare-logging-service', 
+    { 
+        "severity": "ERROR",
+        "payload":{
+            error
+        }
+    })
+  return Promise.reject(error);
+});
+
+axios.interceptors.response.use(response => {
+  // console.log(response);
+  // Edit response config
+  return response;
+}, error => {
+  axios.post('/nodejs-cloudflare-logging-service', 
+    { 
+        "severity": "ERROR",
+        "payload":{
+            error
+        }
+    })
+  return Promise.reject(error);
+});
+
 function renderToDOM() {
   ReactDOM.render(
     <React.StrictMode>
