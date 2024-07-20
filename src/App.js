@@ -15,6 +15,7 @@ axios.interceptors.request.use(request => {
   // Edit request config
   return request;
 }, error => {
+  try {
   axios.post('/nodejs-cloudflare-logging-service', 
     { 
         "severity": "ERROR",
@@ -22,7 +23,9 @@ axios.interceptors.request.use(request => {
             error
         }
     })
-  return Promise.reject(error);
+  } catch (error) {
+    console.log(error);
+  }
 });
 
 axios.interceptors.response.use(response => {
@@ -30,14 +33,17 @@ axios.interceptors.response.use(response => {
   // Edit response config
   return response;
 }, error => {
-  axios.post('/nodejs-cloudflare-logging-service', 
-    { 
-        "severity": "ERROR",
-        "payload":{
-            error
-        }
-    })
-  return Promise.reject(error);
+  try {
+    axios.post('/nodejs-cloudflare-logging-service', 
+      { 
+          "severity": "ERROR",
+          "payload":{
+              error
+          }
+      })
+    } catch (error) {
+      console.log(error);
+    }
 });
 
 function renderToDOM() {
