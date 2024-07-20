@@ -17,6 +17,7 @@ import { WifiLoader } from "react-awesome-loaders-py3";
 import { useDispatch, useSelector } from 'react-redux';
 import { loginUser, getDarkMode } from "../common/store/slices/user/userSlice";
 import { H2 } from "dtk/Typography";
+import axios from 'axios';
 
 import ProfilePage from '../mfe/profile/ProfilePage';
 import HomePage from '../mfe/home/HomePage';
@@ -29,6 +30,9 @@ const Main = function Layout() {
     const [darkMode, setDarkMode] = useState(false);
 
     useEffect(() => {
+        if (user.access_token) {
+          axios.defaults.headers.common['Authorization'] = `Bearer ${user.access_token}`;
+        }      
         if (user && user.loading && user.loading == 'complete') {
             var now = new Date().getTime();
             if (
