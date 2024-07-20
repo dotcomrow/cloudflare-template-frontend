@@ -36,9 +36,7 @@ export default function HomePage() {
                                     "payload":{
                                         "message": "This is a test log message"
                                     }
-                                }).then((response) => {
-                                console.log(response.data);
-                            });
+                                });
                         }}>Test log</Button>
                     </div>
                 </div>
