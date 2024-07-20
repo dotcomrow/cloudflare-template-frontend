@@ -52,6 +52,9 @@ const Main = function Layout() {
     }, [])
 
     useEffect(() => {
+        if (user.access_token) {
+            axios.defaults.headers.common['Authorization'] = `Bearer ${user.access_token}`;
+          }
         if (user && (user.loading) && (user.loading == 'complete') && (user.user_settings) && (user.user_settings.loading) && (user.user_settings.loading == 'complete')) {
             if (document.getElementById('loaderParent'))
                 document.getElementById('loaderParent').classList.add("loader-hide");

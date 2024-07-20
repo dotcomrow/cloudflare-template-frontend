@@ -53,6 +53,10 @@ export const fetchPreferences = createAsyncThunk(
   async (arg, thunkAPI) => {
     return await axios(preferencesUrl, {
       method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: "Bearer " + arg,
+      },
     })
       .then((response) => {
         return response.data
@@ -97,9 +101,7 @@ export const loginUser = createAsyncThunk(
           return await new Promise((resolve, reject) => {
             resolve(params);
             thunkAPI.dispatch(fetchGoogleProfile(params.access_token));
-            thunkAPI.dispatch(fetchPreferences({
-              'access_token':params.access_token
-            }));
+            thunkAPI.dispatch(fetchPreferences(params.access_token));
             localStorage.removeItem(STATE);
           });
         }
