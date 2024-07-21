@@ -86,7 +86,7 @@ function ProfilePage({ vars }) {
 
     return (
         <ErrorBoundary FallbackComponent={displayError}>
-            <div className="pt-5 ps-5 pe-5 pb-5 container">
+            <div className="pt-5 ps-2 pe-2 pb-5 container">
                 <div className="row w-100">
                     <div className="align-items-start col">
                         <div
@@ -113,7 +113,7 @@ function ProfilePage({ vars }) {
                     </div>
                 </div>
             </div>
-            <div className="pt-5 ps-5 pe-5 pb-5 container">
+            <div className="pt-5 ps-2 pe-2 pb-5 container">
                 <div className="row w-100">
                     <div className="col">
                         <Tabs setSelected={setSelected} selected={selected} aria-label="Settings">
