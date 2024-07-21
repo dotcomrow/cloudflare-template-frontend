@@ -1,10 +1,10 @@
 import React, { Suspense, useEffect, useState } from "react";
 import { ErrorBoundary } from "react-error-boundary";
 import { displayError } from '../../common/utilities/functions';
-import { updatePreference, getDarkMode } from '../../common/store/slices/user/userSlice';
+import { getDarkMode } from '../../common/store/slices/user/userSlice';
 import Button from 'dtk/Button';
 import { H3, H2, Subtitle } from 'dtk/Typography';
-import { useSelector, useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
 import axios from "axios";
 
 export default function HomePage() {
@@ -30,7 +30,7 @@ export default function HomePage() {
                     <H2 darkMode={darkMode}>Home Page</H2>
                     <div>
                         <Button onClick={() => {
-                            axios.post('/nodejs-cloudflare-logging-service', 
+                            axios.post('nodejs-cloudflare-logging-service', 
                                 { 
                                     "severity": "INFO",
                                     "payload":{
