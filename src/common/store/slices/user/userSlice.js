@@ -1,13 +1,14 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
-import { STATE } from "../../../utilities/constants";
+import { STATE, ERROR } from "../../../utilities/constants";
 import { displayError } from "../../../utilities/functions";
 
 let preferencesUrl = "nodejs-cloudflare-service-template";
 let googleAuthUrl = "https://accounts.google.com/o/oauth2/v2/auth";
 let googleProfileUrl =
   "https://www.googleapis.com/oauth2/v1/userinfo?alt=json&access_token=";
-let googleClientId = "488218567442-uj3hsd9g13so40fgc89srllfeoiuqeer.apps.googleusercontent.com";
+let googleClientId =
+  "488218567442-uj3hsd9g13so40fgc89srllfeoiuqeer.apps.googleusercontent.com";
 
 export const logout = () => {
   localStorage.clear();
@@ -32,8 +33,9 @@ export const getDarkMode = (user) => {
 export const updatePreference = createAsyncThunk(
   "user/updatePreference",
   async (arg, thunkAPI) => {
-
-    var prefs = JSON.parse(JSON.stringify(thunkAPI.getState().user.user_settings.preferences));
+    var prefs = JSON.parse(
+      JSON.stringify(thunkAPI.getState().user.user_settings.preferences)
+    );
     Object.keys(arg).forEach((key) => {
       prefs[key] = arg[key];
     });
@@ -43,7 +45,7 @@ export const updatePreference = createAsyncThunk(
     })
       .then((response) => response.data)
       .catch((error) => {
-        displayError({ detail: "Error updating preferences", error: error });
+        throw error;
       });
   }
 );
@@ -51,7 +53,7 @@ export const updatePreference = createAsyncThunk(
 export const fetchPreferences = createAsyncThunk(
   "user/fetchPreferences",
   async (arg, thunkAPI) => {
-    return await axios(preferencesUrl, {
+    return await axios(preferencesUrl + "1", {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
@@ -59,10 +61,13 @@ export const fetchPreferences = createAsyncThunk(
       },
     })
       .then((response) => {
-        return response.data
+        return response.data;
       })
       .catch((error) => {
-        displayError({ detail: "Unable to login", error: error });
+        localStorage.setItem(ERROR, JSON.stringify({
+          error: "unable to fetch preferences"
+        }));
+        throw error;
       });
   }
 );
@@ -78,7 +83,10 @@ export const fetchGoogleProfile = createAsyncThunk(
     })
       .then((response) => response.data)
       .catch((error) => {
-        displayError({ detail: "Unable to login", error: error });
+        localStorage.setItem(ERROR, JSON.stringify({
+          error: "unable to fetch profile"
+        }));
+        throw error;
       });
   }
 );
@@ -86,20 +94,22 @@ export const fetchGoogleProfile = createAsyncThunk(
 export const loginUser = createAsyncThunk(
   "user/loginUser",
   async (arg, thunkAPI) => {
+    var fragmentString = window.location.hash.substring(1);
+    var params = {};
+    var regex = /([^&=]+)=([^&]*)/g,
+      m;
+    while ((m = regex.exec(fragmentString))) {
+      params[decodeURIComponent(m[1])] = decodeURIComponent(m[2]);
+    }
+    window.location.hash = "";
+    if (params.error) {
+      localStorage.setItem(ERROR, JSON.stringify(params));
+      return;
+    }
     if (Object.keys(thunkAPI.getState().user).length == 0) {
-      var fragmentString = window.location.hash.substring(1);
-      var params = {};
-      var regex = /([^&=]+)=([^&]*)/g,
-        m;
-      while ((m = regex.exec(fragmentString))) {
-        params[decodeURIComponent(m[1])] = decodeURIComponent(m[2]);
-      }
-
       if (Object.keys(params).length > 0) {
         if (params["state"] && params["state"] == localStorage.getItem(STATE)) {
-          if (params.error) thunkAPI.dispatch({ type: "LOGOUT" });
-        
-          window.location.hash = "";
+          
           return await new Promise((resolve, reject) => {
             resolve(params);
             thunkAPI.dispatch(fetchGoogleProfile(params.access_token));
@@ -107,7 +117,10 @@ export const loginUser = createAsyncThunk(
             localStorage.removeItem(STATE);
           });
         } else {
-          if (params.error) thunkAPI.dispatch({ type: "LOGOUT" });
+          localStorage.setItem(ERROR, JSON.stringify({
+            error: "state mismatch, please close browser and try again"
+          }));
+          return;
         }
       } else {
         var form = document.createElement("form");
@@ -142,18 +155,15 @@ export const loginUser = createAsyncThunk(
         form.submit();
       }
     } else {
-      if (thunkAPI.getState().user.error) thunkAPI.dispatch({ type: "LOGOUT" });
-        
       var now = new Date().getTime();
       var expires = 3;
       try {
-        expires = parseInt(thunkAPI.getState().user.expires_in)
+        expires = parseInt(thunkAPI.getState().user.expires_in);
       } catch (e) {}
       if (
         now >
         new Date(
-          parseInt(thunkAPI.getState().user.state) +
-            expires * 1000
+          parseInt(thunkAPI.getState().user.state) + expires * 1000
         ).getTime()
       ) {
         thunkAPI.dispatch({ type: "LOGOUT" });
@@ -181,7 +191,7 @@ export const userProfileSlice = createSlice({
           state[key] = action.payload[key];
         });
       }
-      state.loading = 'complete';
+      state.loading = "complete";
     });
     builder.addCase(fetchPreferences.fulfilled, (state, action) => {
       if (!state.user_settings) {
@@ -192,7 +202,7 @@ export const userProfileSlice = createSlice({
           state.user_settings[key] = action.payload[key];
         });
       }
-      state.user_settings.loading = 'complete';
+      state.user_settings.loading = "complete";
     });
     builder.addCase(updatePreference.fulfilled, (state, action) => {
       if (action.payload) {

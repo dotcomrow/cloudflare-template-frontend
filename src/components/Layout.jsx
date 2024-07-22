@@ -12,7 +12,7 @@ import Header from "./globalnav/layout/header/header";
 import Footer from "./globalnav/layout/footer/footer";
 import { BaseStyles } from "dtk/BaseStyles";
 import { displayError } from '../common/utilities/functions';
-import { LOADER_KEY } from "../common/utilities/constants";
+import { LOADER_KEY, ERROR } from "../common/utilities/constants";
 import { WifiLoader } from "react-awesome-loaders-py3";
 import { useDispatch, useSelector } from 'react-redux';
 import { loginUser, getDarkMode } from "../common/store/slices/user/userSlice";
@@ -25,6 +25,8 @@ import HomePage from '../mfe/home/HomePage';
 const Main = function Layout() {
 
     const [pageLoader, setPageLoader] = useState(true);
+    const [siteError, setSiteError] = useState(false);
+    const [siteException, setSiteException] = useState({});
     const dispatch = useDispatch();
     const user = useSelector((state) => state.user);
     const [darkMode, setDarkMode] = useState(false);
@@ -69,11 +71,48 @@ const Main = function Layout() {
         });
     }
 
+    const displaySiteError = (errorObj) => {
+        setPageLoader(false);
+        setSiteException({
+            detail: errorObj.error, error: {
+                message: errorObj.message,
+                stack: errorObj.stack
+            },
+            title: errorObj.title,
+            detailMessage: errorObj.detailMessage
+        });
+        setSiteError(true);
+    }
+
+    useEffect(() => {
+        const errorTest = () => {
+            if (localStorage.getItem(ERROR)) {
+                var e = JSON.parse(localStorage.getItem(ERROR));
+                displaySiteError({
+                    error: e.error,
+                    stack: null,
+                    message: null,
+                    title: "Login Error",
+                    detailMessage: "Authentication is required.  Please choose an account to continue."
+                });
+                localStorage.removeItem(ERROR);
+            } else {
+                setTimeout(() => {
+                    errorTest();
+                }, 1000);
+            }
+        }
+        setTimeout(() => {
+            errorTest();
+        }, 1000);
+    }, [])
+
+
     useEffect(() => {
         if (user.access_token) {
             initializeAxios();
         }
-        if (user && user.loading && user.loading == 'complete') {
+        if (user && (user.loading) && (user.loading == 'complete') && (user.user_settings) && (user.user_settings.loading) && (user.user_settings.loading == 'complete')) {
             var now = new Date().getTime();
             if (
                 now >
@@ -86,11 +125,16 @@ const Main = function Layout() {
             }
         } else {
             dispatch(loginUser()).catch((err) => {
-                displayError({ error: err })
+                var e = JSON.parse(localStorage.getItem(ERROR));
+                displaySiteError({
+                    error: "Error",
+                    stack: err,
+                    message: null,
+                    title: "Something went wrong!",
+                    detailMessage: "An error occurred during authentication, please try again."
+                });
+                localStorage.removeItem(ERROR);
             });
-        }
-        if (user.error) {
-            displayError({ error: user.error })
         }
     }, [])
 
@@ -119,8 +163,16 @@ const Main = function Layout() {
                 document.documentElement.setAttribute('data-bs-theme', 'light');
             }
         }
-        if (user.error) {
-            displayError({ error: user.error })
+        if (localStorage.getItem(ERROR)) {
+            var e = JSON.parse(localStorage.getItem(ERROR));
+            displaySiteError({
+                error: e.error,
+                stack: null,
+                message: null,
+                title: "Login Error",
+                detailMessage: "Authentication is required.  Please choose an account to continue."
+            });
+            localStorage.removeItem(ERROR);
         }
     }, [user])
 
@@ -163,7 +215,7 @@ const Main = function Layout() {
                 <LoaderTxt />
             </div>
         </div>)
-        : (
+        : (siteError ? <div id="siteError">{displayError(siteException)}</div> :
             <ErrorBoundary FallbackComponent={displayError}>
                 <Router>
                     <Header />

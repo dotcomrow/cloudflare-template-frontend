@@ -4,6 +4,7 @@ export const LOADER_KEY = "loader";
 export const CONFIG_GROUP = "config_admins"
 export const PAID_USERS_GROUP = "paid_users"
 export const STATE = "state";
+export const ERROR = "error";
 
 export const lookupCodes = Object.freeze({
     PLACEHOLDER: "placeholder",
