@@ -28,12 +28,12 @@ const Main = function Layout() {
     const dispatch = useDispatch();
     const user = useSelector((state) => state.user);
     const [darkMode, setDarkMode] = useState(false);
-    var isLoggedIn = false;
+    const [loggedIn, setLoggedIn] = useState(false);
 
     useEffect(() => {
         setTimeout(async () => {
             // login not completed in 10 seconds...something not right
-            if (isLoggedIn == false) {
+            if (loggedIn == false) {
                 await axios.post('nodejs-cloudflare-logging-service',
                     {
                         "severity": "ERROR",
@@ -49,7 +49,7 @@ const Main = function Layout() {
             axios.defaults.headers.common['Authorization'] = `Bearer ${user.access_token}`;
         }
         if (user && user.loading && user.loading == 'complete') {
-            isLoggedIn = true;
+            setLoggedIn(true);
             var now = new Date().getTime();
             if (
                 now >
