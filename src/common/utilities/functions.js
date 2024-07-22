@@ -1,7 +1,7 @@
 import React from "react";
 
 export const displayError = ({ detail, error }) => {
-  axios.post('/nodejs-cloudflare-logging-service', 
+  axios.post('nodejs-cloudflare-logging-service', 
     { 
         "severity": "ERROR",
         "payload":{
