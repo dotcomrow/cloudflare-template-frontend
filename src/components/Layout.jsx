@@ -31,7 +31,7 @@ const Main = function Layout() {
     var isLoggedIn = false;
 
     useEffect(() => {
-        var timeoutTimer = setTimeout(async () => {
+        setTimeout(async () => {
             // login not completed in 10 seconds...something not right
             if (isLoggedIn == false) {
                 await axios.post('nodejs-cloudflare-logging-service',
