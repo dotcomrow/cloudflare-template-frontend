@@ -29,45 +29,49 @@ const Main = function Layout() {
     const user = useSelector((state) => state.user);
     const [darkMode, setDarkMode] = useState(false);
 
+    const initializeAxios = () => {
+        axios.defaults.headers.common['Authorization'] = `Bearer ${user.access_token}`;
+
+        axios.interceptors.request.use(request => {
+            // console.log(request);
+            // Edit request config
+            return request;
+        }, error => {
+            try {
+                axios.post('/nodejs-cloudflare-logging-service',
+                    {
+                        "severity": "ERROR",
+                        "payload": {
+                            error
+                        }
+                    })
+            } catch (error) {
+                console.log(error);
+            }
+        });
+
+        axios.interceptors.response.use(response => {
+            // console.log(response);
+            // Edit response config
+            return response;
+        }, error => {
+            try {
+                axios.post('/nodejs-cloudflare-logging-service',
+                    {
+                        "severity": "ERROR",
+                        "payload": {
+                            error
+                        }
+                    })
+            } catch (error) {
+                console.log(error);
+            }
+        });
+    }
+
     useEffect(() => {
         if (user.access_token) {
-            axios.defaults.headers.common['Authorization'] = `Bearer ${user.access_token}`;
-
-            axios.interceptors.request.use(request => {
-                // console.log(request);
-                // Edit request config
-                return request;
-            }, error => {
-                try {
-                    axios.post('/nodejs-cloudflare-logging-service',
-                        {
-                            "severity": "ERROR",
-                            "payload": {
-                                error
-                            }
-                        })
-                } catch (error) {
-                    console.log(error);
-                }
-            });
-
-            axios.interceptors.response.use(response => {
-                // console.log(response);
-                // Edit response config
-                return response;
-            }, error => {
-                try {
-                    axios.post('/nodejs-cloudflare-logging-service',
-                        {
-                            "severity": "ERROR",
-                            "payload": {
-                                error
-                            }
-                        })
-                } catch (error) {
-                    console.log(error);
-                }
-            });
+            initializeAxios();
         }
         if (user && user.loading && user.loading == 'complete') {
             var now = new Date().getTime();
@@ -92,43 +96,7 @@ const Main = function Layout() {
 
     useEffect(() => {
         if (user.access_token) {
-            axios.defaults.headers.common['Authorization'] = `Bearer ${user.access_token}`;
-
-            axios.interceptors.request.use(request => {
-                // console.log(request);
-                // Edit request config
-                return request;
-            }, error => {
-                try {
-                    axios.post('/nodejs-cloudflare-logging-service',
-                        {
-                            "severity": "ERROR",
-                            "payload": {
-                                error
-                            }
-                        })
-                } catch (error) {
-                    console.log(error);
-                }
-            });
-
-            axios.interceptors.response.use(response => {
-                // console.log(response);
-                // Edit response config
-                return response;
-            }, error => {
-                try {
-                    axios.post('/nodejs-cloudflare-logging-service',
-                        {
-                            "severity": "ERROR",
-                            "payload": {
-                                error
-                            }
-                        })
-                } catch (error) {
-                    console.log(error);
-                }
-            });
+            initializeAxios();
         }
         if (user && (user.loading) && (user.loading == 'complete') && (user.user_settings) && (user.user_settings.loading) && (user.user_settings.loading == 'complete')) {
             if (document.getElementById('loaderParent'))
@@ -156,8 +124,29 @@ const Main = function Layout() {
         }
     }, [user])
 
-    const Loader = () => {
+    const LoaderTxt = () => {
         return (
+            <div className="loaderContainerTxt">
+                <H2 darkMode={window.matchMedia("(prefers-color-scheme: dark)").matches ? true : false}>
+                    {user ?
+                        user.loading ?
+                            user.loading == 'complete' ?
+                                user.user_settings ?
+                                    user.user_settings.loading == 'complete' ?
+                                        'Loading Complete!' : 'Loading Preferences...'
+                                    : 'User Loading Complete, Loading Preferences...'
+                                : 'Loading User Data...'
+                            : 'Finding User...'
+                        : 'Starting login...'}
+                </H2>
+            </div>
+        )
+    }
+
+    return (pageLoader) ? (
+        <div id="loaderParent" onTransitionEnd={() => {
+            setPageLoader(false);
+        }}>
             <div className="loader" id={LOADER_KEY} style={{
                 "background": window.matchMedia("(prefers-color-scheme: dark)").matches ? "rgba(0,0,0,1)" : "rgba(255,255,255,0.5)",
             }}>
@@ -171,28 +160,9 @@ const Main = function Layout() {
                         frontColor="darkblue"
                     />
                 </div>
-                <div className="loaderContainerTxt">
-                    <H2 darkMode={window.matchMedia("(prefers-color-scheme: dark)").matches ? true : false}>
-                        {user ?
-                            user.loading ?
-                                user.loading == 'complete' ?
-                                    user.user_settings ?
-                                        user.user_settings.loading == 'complete' ?
-                                            'Loading Complete!' : 'Loading Preferences...'
-                                        : 'User Loading Complete, Loading Preferences...'
-                                    : 'Loading User Data...'
-                                : 'Finding User...'
-                            : 'Starting login...'}
-                    </H2>
-                </div>
+                <LoaderTxt />
             </div>
-        )
-    }
-
-    return (pageLoader) ? (
-        <div id="loaderParent" onTransitionEnd={() => {
-            setPageLoader(false);
-        }}><Loader /></div>)
+        </div>)
         : (
             <ErrorBoundary FallbackComponent={displayError}>
                 <Router>
