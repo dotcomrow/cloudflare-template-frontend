@@ -53,7 +53,7 @@ export const updatePreference = createAsyncThunk(
 export const fetchPreferences = createAsyncThunk(
   "user/fetchPreferences",
   async (arg, thunkAPI) => {
-    return await axios(preferencesUrl + "1", {
+    return await axios(preferencesUrl, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
