@@ -72,6 +72,7 @@ const Main = function Layout() {
             axios.defaults.headers.common['Authorization'] = `Bearer ${user.access_token}`;
         }
         if (user && (user.loading) && (user.loading == 'complete') && (user.user_settings) && (user.user_settings.loading) && (user.user_settings.loading == 'complete')) {
+            setLoggedIn(true);
             if (document.getElementById('loaderParent'))
                 document.getElementById('loaderParent').classList.add("loader-hide");
 
