@@ -1,6 +1,7 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 import { STATE } from "../../../utilities/constants";
+import { displayError } from "../../../utilities/functions";
 
 let preferencesUrl = "nodejs-cloudflare-service-template";
 let googleAuthUrl = "https://accounts.google.com/o/oauth2/v2/auth";
@@ -42,7 +43,7 @@ export const updatePreference = createAsyncThunk(
     })
       .then((response) => response.data)
       .catch((error) => {
-        throw error;
+        displayError({ detail: "Error updating preferences", error: error });
       });
   }
 );
@@ -61,7 +62,7 @@ export const fetchPreferences = createAsyncThunk(
         return response.data
       })
       .catch((error) => {
-        throw error;
+        displayError({ detail: "Unable to login", error: error });
       });
   }
 );
@@ -77,7 +78,7 @@ export const fetchGoogleProfile = createAsyncThunk(
     })
       .then((response) => response.data)
       .catch((error) => {
-        throw error;
+        displayError({ detail: "Unable to login", error: error });
       });
   }
 );

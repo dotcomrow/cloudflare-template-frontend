@@ -34,7 +34,7 @@ export default function HomePage() {
                             <Subtitle>Sub title</Subtitle>
                             <Button>Click me</Button>
                         </div>
-                        <div class="col-6">
+                        <div class="col-6 tile">
                             <img src='cloud_computing.svg' alt="cloud computing image" width="100%" height="50%"/>
                         </div>
                     </div>

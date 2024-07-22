@@ -7,6 +7,7 @@ import store, { persistor } from "./common/store/store";
 import { Provider } from "react-redux";
 import axios from 'axios';
 
+
 axios.defaults.baseURL = 'https://api-gateway.suncoast.systems';
 axios.defaults.headers.post['Content-Type'] = 'application/json';
 
