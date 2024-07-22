@@ -30,9 +30,9 @@ const Main = function Layout() {
     const [darkMode, setDarkMode] = useState(false);
 
     useEffect(() => {
-        var timeoutTimer = setTimeout(() => {
+        var timeoutTimer = setTimeout(async () => {
             // login not completed in 10 seconds...something not right
-            axios.post('/nodejs-cloudflare-logging-service',
+            await axios.post('nodejs-cloudflare-logging-service',
                 {
                     "severity": "ERROR",
                     "payload": {
