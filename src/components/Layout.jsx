@@ -28,25 +28,28 @@ const Main = function Layout() {
     const dispatch = useDispatch();
     const user = useSelector((state) => state.user);
     const [darkMode, setDarkMode] = useState(false);
+    var isLoggedIn = false;
 
     useEffect(() => {
         var timeoutTimer = setTimeout(async () => {
             // login not completed in 10 seconds...something not right
-            await axios.post('nodejs-cloudflare-logging-service',
-                {
-                    "severity": "ERROR",
-                    "payload": {
-                        message: "Login not completed in 10 seconds",
-                        user: user
-                    }
-                })
-            dispatch({ type: "LOGOUT" });
+            if (isLoggedIn == false) {
+                await axios.post('nodejs-cloudflare-logging-service',
+                    {
+                        "severity": "ERROR",
+                        "payload": {
+                            message: "Login not completed in 10 seconds",
+                            user: user
+                        }
+                    })
+                dispatch({ type: "LOGOUT" });
+            }
         }, 10 * 1000);
         if (user.access_token) {
             axios.defaults.headers.common['Authorization'] = `Bearer ${user.access_token}`;
         }
         if (user && user.loading && user.loading == 'complete') {
-            clearTimeout(timeoutTimer);
+            isLoggedIn = true;
             var now = new Date().getTime();
             if (
                 now >
