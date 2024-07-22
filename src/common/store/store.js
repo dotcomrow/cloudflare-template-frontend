@@ -17,7 +17,9 @@ const appReducer = combineReducers({
 const rootReducer = (state, action) => {
     if (action.type === 'LOGOUT') {
         setInterval(() => {
-           window.location.reload();
+            localStorage.clear();
+            sessionStorage.clear();
+            window.location.reload();
         }, 500)
         return appReducer(undefined, action);
     }
