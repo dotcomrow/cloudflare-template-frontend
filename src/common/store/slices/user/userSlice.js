@@ -85,7 +85,7 @@ export const fetchGoogleProfile = createAsyncThunk(
 export const loginUser = createAsyncThunk(
   "user/loginUser",
   async (arg, thunkAPI) => {
-    if (!thunkAPI.getState().user || !thunkAPI.getState().user.access_token) {
+    if (Object.keys(thunkAPI.getState().user).length == 0) {
       var fragmentString = window.location.hash.substring(1);
       var params = {};
       var regex = /([^&=]+)=([^&]*)/g,
@@ -96,6 +96,8 @@ export const loginUser = createAsyncThunk(
 
       if (Object.keys(params).length > 0) {
         if (params["state"] && params["state"] == localStorage.getItem(STATE)) {
+          if (params.error) thunkAPI.dispatch({ type: "LOGOUT" });
+        
           window.location.hash = "";
           return await new Promise((resolve, reject) => {
             resolve(params);
@@ -103,6 +105,8 @@ export const loginUser = createAsyncThunk(
             thunkAPI.dispatch(fetchPreferences(params.access_token));
             localStorage.removeItem(STATE);
           });
+        } else {
+          if (params.error) thunkAPI.dispatch({ type: "LOGOUT" });
         }
       } else {
         var form = document.createElement("form");
@@ -137,12 +141,18 @@ export const loginUser = createAsyncThunk(
         form.submit();
       }
     } else {
+      if (thunkAPI.getState().user.error) thunkAPI.dispatch({ type: "LOGOUT" });
+        
       var now = new Date().getTime();
+      var expires = 3;
+      try {
+        expires = parseInt(thunkAPI.getState().user.expires_in)
+      } catch (e) {}
       if (
         now >
         new Date(
           parseInt(thunkAPI.getState().user.state) +
-            parseInt(thunkAPI.getState().user.expires_in) * 1000
+            expires * 1000
         ).getTime()
       ) {
         thunkAPI.dispatch({ type: "LOGOUT" });

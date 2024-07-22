@@ -30,22 +30,44 @@ const Main = function Layout() {
     const [darkMode, setDarkMode] = useState(false);
 
     useEffect(() => {
-        setTimeout(async () => {
-            // login not completed in 10 seconds...something not right
-            if (!user) {
-                await axios.post('nodejs-cloudflare-logging-service',
-                    {
-                        "severity": "ERROR",
-                        "payload": {
-                            message: "Login not completed in 10 seconds",
-                            user: user
-                        }
-                    })
-                dispatch({ type: "LOGOUT" });
-            }
-        }, 10 * 1000);
         if (user.access_token) {
             axios.defaults.headers.common['Authorization'] = `Bearer ${user.access_token}`;
+
+            axios.interceptors.request.use(request => {
+                // console.log(request);
+                // Edit request config
+                return request;
+            }, error => {
+                try {
+                    axios.post('/nodejs-cloudflare-logging-service',
+                        {
+                            "severity": "ERROR",
+                            "payload": {
+                                error
+                            }
+                        })
+                } catch (error) {
+                    console.log(error);
+                }
+            });
+
+            axios.interceptors.response.use(response => {
+                // console.log(response);
+                // Edit response config
+                return response;
+            }, error => {
+                try {
+                    axios.post('/nodejs-cloudflare-logging-service',
+                        {
+                            "severity": "ERROR",
+                            "payload": {
+                                error
+                            }
+                        })
+                } catch (error) {
+                    console.log(error);
+                }
+            });
         }
         if (user && user.loading && user.loading == 'complete') {
             var now = new Date().getTime();
@@ -63,11 +85,50 @@ const Main = function Layout() {
                 displayError({ error: err })
             });
         }
+        if (user.error) {
+            displayError({ error: user.error })
+        }
     }, [])
 
     useEffect(() => {
         if (user.access_token) {
             axios.defaults.headers.common['Authorization'] = `Bearer ${user.access_token}`;
+
+            axios.interceptors.request.use(request => {
+                // console.log(request);
+                // Edit request config
+                return request;
+            }, error => {
+                try {
+                    axios.post('/nodejs-cloudflare-logging-service',
+                        {
+                            "severity": "ERROR",
+                            "payload": {
+                                error
+                            }
+                        })
+                } catch (error) {
+                    console.log(error);
+                }
+            });
+
+            axios.interceptors.response.use(response => {
+                // console.log(response);
+                // Edit response config
+                return response;
+            }, error => {
+                try {
+                    axios.post('/nodejs-cloudflare-logging-service',
+                        {
+                            "severity": "ERROR",
+                            "payload": {
+                                error
+                            }
+                        })
+                } catch (error) {
+                    console.log(error);
+                }
+            });
         }
         if (user && (user.loading) && (user.loading == 'complete') && (user.user_settings) && (user.user_settings.loading) && (user.user_settings.loading == 'complete')) {
             if (document.getElementById('loaderParent'))
@@ -89,6 +150,9 @@ const Main = function Layout() {
             } else {
                 document.documentElement.setAttribute('data-bs-theme', 'light');
             }
+        }
+        if (user.error) {
+            displayError({ error: user.error })
         }
     }, [user])
 
