@@ -1,7 +1,6 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 import { STATE, ERROR } from "../../../utilities/constants";
-import { displayError } from "../../../utilities/functions";
 
 let preferencesUrl = "nodejs-cloudflare-service-template";
 let googleAuthUrl = "https://accounts.google.com/o/oauth2/v2/auth";
