@@ -29,8 +29,8 @@ resource "cloudflare_pages_project" "app" {
       deployments_enabled           = true
       production_deployment_enabled = true
       preview_deployment_setting    = "custom"
-      preview_branch_includes       = ["dev"]
-      preview_branch_excludes       = ["master", "prod"]
+      preview_branch_includes       = ["dev-content"]
+      preview_branch_excludes       = ["master", "prod", "prod-content"]
     }
   }
 
