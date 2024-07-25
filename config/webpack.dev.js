@@ -6,9 +6,6 @@ const ExternalRemotesPlugin = require('external-remotes-plugin');
 
 const devConfig = {
     mode: 'development',
-    output: {
-        publicPath: 'auto',
-    },
     devServer: {
         port: 8081,
         historyApiFallback: true,
