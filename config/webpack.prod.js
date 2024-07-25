@@ -6,10 +6,6 @@ const ExternalRemotesPlugin = require('external-remotes-plugin');
 
 const prodConfig = {
     mode: 'production',
-    output: {
-        filename: '[name].[contenthash].js',
-        publicPath: 'auto',
-    },
     devServer: {
         // port: 8081,
         historyApiFallback: true,

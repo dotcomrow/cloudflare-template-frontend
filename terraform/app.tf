@@ -15,26 +15,48 @@ resource "cloudflare_record" "app" {
   allow_overwrite = true
 }
 
+resource "cloudflare_worker_script" "project_script" {
+  account_id         = var.cloudflare_account_id
+  name               = var.project_name
+  content            = file("${path.module}/dist/loader.js")
+  compatibility_date = "2023-08-28"
+  module             = true
+
+  depends_on = [cloudflare_pages_domain.app]
+}
+
 resource "cloudflare_pages_project" "app" {
   account_id        = var.cloudflare_account_id
   name              = var.project_name
-  production_branch = "gh-pages"
+  production_branch = "prod-content"
   source {
     type = "github"
     config {
       owner                         = "dotcomrow"
       repo_name                     = var.project_name
-      production_branch             = "gh-pages"
+      production_branch             = "prod-content"
       pr_comments_enabled           = true
       deployments_enabled           = true
       production_deployment_enabled = true
-      preview_deployment_setting    = "none"
+      preview_deployment_setting    = "custom"
+      preview_branch_includes       = ["dev-content"]
+      preview_branch_excludes       = ["master", "prod", "prod-content"]
     }
   }
 
   deployment_configs {
     production {
+      service_binding {
+        name = "CONFIGS"
+        service = cloudflare_worker_script.project_script.name
+      }
+    }
 
+    preview {
+      service_binding {
+        name = "CONFIGS"
+        service = cloudflare_worker_script.project_script.name
+      }
     }
   }
 }
