@@ -4,6 +4,6 @@ export const onRequest = async (context) => {
 
   const asset = await context.env.ASSETS.fetch(url);
   // fetch config and inject
-  console.log("handled html");
+  console.log(asset);
   return context.env.ASSETS.fetch(url);
 };
