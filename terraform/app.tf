@@ -22,7 +22,6 @@ resource "cloudflare_worker_script" "project_script" {
   compatibility_date = "2023-08-28"
   module             = true
 
-  depends_on = [cloudflare_pages_domain.app]
 }
 
 resource "cloudflare_pages_project" "app" {
