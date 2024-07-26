@@ -42,7 +42,7 @@ resource "cloudflare_pages_project" "app" {
   source {
     type = "github"
     config {
-      owner                         = "dotcomrow"
+      owner                         = var.org_name
       repo_name                     = var.project_name
       production_branch             = "prod"
       pr_comments_enabled           = true
