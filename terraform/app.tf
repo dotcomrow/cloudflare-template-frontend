@@ -24,17 +24,6 @@ resource "cloudflare_record" "app" {
 
 # }
 
-resource "cloudflare_pages_project" "build_config" {
-  account_id        = var.cloudflare_account_id
-  name              = var.project_name
-  production_branch = "prod"
-  build_config {
-    build_command       = "npm run build"
-    destination_dir     = "build"
-    root_dir            = ""
-  }
-}
-
 resource "cloudflare_pages_project" "app" {
   account_id        = var.cloudflare_account_id
   name              = var.project_name
@@ -52,6 +41,12 @@ resource "cloudflare_pages_project" "app" {
       preview_branch_includes       = ["dev"]
       preview_branch_excludes       = [ "prod"]
     }
+  }
+
+  build_config {
+    build_command       = "npm run build"
+    destination_dir     = "build"
+    root_dir            = ""
   }
 
   deployment_configs {
