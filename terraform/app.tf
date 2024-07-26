@@ -22,7 +22,17 @@ resource "cloudflare_worker_script" "project_script" {
   compatibility_date = "2023-08-28"
   module             = true
 
-  depends_on = [cloudflare_pages_domain.app]
+}
+
+resource "cloudflare_pages_project" "build_config" {
+  account_id        = var.cloudflare_account_id
+  name              = var.project_name
+  production_branch = "prod"
+  build_config {
+    build_command       = "npm run build"
+    destination_dir     = "build"
+    root_dir            = ""
+  }
 }
 
 resource "cloudflare_pages_project" "app" {
