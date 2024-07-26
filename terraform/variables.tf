@@ -1,4 +1,8 @@
-
+variable org_name {
+  description = "Organization name"
+  type        = string
+  nullable = false
+}
 variable "domain" {
   description = "the domain hosted in cloudflare"
   type        = string
