@@ -46,7 +46,6 @@ resource "cloudflare_pages_project" "app" {
   build_config {
     build_command       = "npm run build"
     destination_dir     = "build"
-    root_dir            = ""
   }
 
   deployment_configs {
