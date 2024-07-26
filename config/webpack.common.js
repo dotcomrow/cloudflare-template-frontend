@@ -9,7 +9,7 @@ module.exports = (env) => {
         },
         output: {
             path: path.resolve(__dirname, '../build'),
-            filename: "[name].js",
+            filename: "[name].[hash].js",
             publicPath: '/',
         },
         resolve: {
