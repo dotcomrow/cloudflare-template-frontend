@@ -41,7 +41,14 @@ resource "cloudflare_pages_project" "app" {
 
   deployment_configs {
     production {
+        environment_variables = {
+          GCP_LOGGING_PROJECT_ID = var.GCP_LOGGING_PROJECT_ID
+          LOG_NAME = "${var.project_name}_app_log"
+        }
 
+        secrets = {
+          GCP_LOGGING_CREDENTIALS = var.GCP_LOGGING_CREDENTIALS
+        }
     }
 
     preview {
