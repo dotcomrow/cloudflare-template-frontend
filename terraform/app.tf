@@ -18,7 +18,7 @@ resource "cloudflare_record" "app" {
 resource "cloudflare_worker_script" "project_script" {
   account_id         = var.cloudflare_account_id
   name               = var.project_name
-  content            = file("${path.module}/dist/loader.js")
+  content            = file("${path.module}/build/loader.js")
   compatibility_date = "2023-08-28"
   module             = true
 
