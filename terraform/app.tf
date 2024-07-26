@@ -15,14 +15,14 @@ resource "cloudflare_record" "app" {
   allow_overwrite = true
 }
 
-resource "cloudflare_worker_script" "project_script" {
-  account_id         = var.cloudflare_account_id
-  name               = var.project_name
-  content            = file("${path.module}/src/loader/index.js")
-  compatibility_date = "2023-08-28"
-  module             = true
+# resource "cloudflare_worker_script" "project_script" {
+#   account_id         = var.cloudflare_account_id
+#   name               = var.project_name
+#   content            = file("${path.module}/src/loader/index.js")
+#   compatibility_date = "2023-08-28"
+#   module             = true
 
-}
+# }
 
 resource "cloudflare_pages_project" "build_config" {
   account_id        = var.cloudflare_account_id
