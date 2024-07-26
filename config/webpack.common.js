@@ -6,7 +6,6 @@ module.exports = (env) => {
     return {
         entry: {
             main: path.resolve(__dirname, '../src/index.js'),
-            loader: path.resolve(__dirname, '../src/loader/index.js'),
         },
         output: {
             path: path.resolve(__dirname, '../build'),
