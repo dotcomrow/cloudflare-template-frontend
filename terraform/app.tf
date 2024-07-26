@@ -15,15 +15,6 @@ resource "cloudflare_record" "app" {
   allow_overwrite = true
 }
 
-# resource "cloudflare_worker_script" "project_script" {
-#   account_id         = var.cloudflare_account_id
-#   name               = var.project_name
-#   content            = file("${path.module}/src/loader/index.js")
-#   compatibility_date = "2023-08-28"
-#   module             = true
-
-# }
-
 resource "cloudflare_pages_project" "app" {
   account_id        = var.cloudflare_account_id
   name              = var.project_name
@@ -50,17 +41,11 @@ resource "cloudflare_pages_project" "app" {
 
   deployment_configs {
     production {
-      # service_binding {
-      #   name = "CONFIGS"
-      #   service = cloudflare_worker_script.project_script.name
-      # }
+
     }
 
     preview {
-      # service_binding {
-      #   name = "CONFIGS"
-      #   service = cloudflare_worker_script.project_script.name
-      # }
+
     }
   }
 }
