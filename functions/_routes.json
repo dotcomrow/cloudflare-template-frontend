@@ -4,6 +4,7 @@
     "exclude": [
                 "/*.js", 
                 "/*.svg",
-                "/*.webmanifest"
+                "/*.webmanifest",
+                "/*.favicon"
             ]
  }
