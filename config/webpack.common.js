@@ -75,8 +75,11 @@ module.exports = (env) => {
             new CopyWebpackPlugin({
                 patterns: [
                     {
-                        from: path.resolve(__dirname, '../assets'),
                         from: path.resolve(__dirname, '../functions/_routes.json'),
+                        to: path.resolve(__dirname, '../build'),
+                    },
+                    {
+                        from: path.resolve(__dirname, '../assets'),
                         to: path.resolve(__dirname, '../build'),
                     }
                 ]
