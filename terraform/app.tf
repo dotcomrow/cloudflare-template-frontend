@@ -56,17 +56,17 @@ resource "cloudflare_pages_project" "app" {
 
   deployment_configs {
     production {
-      service_binding {
-        name = "CONFIGS"
-        service = cloudflare_worker_script.project_script.name
-      }
+      # service_binding {
+      #   name = "CONFIGS"
+      #   service = cloudflare_worker_script.project_script.name
+      # }
     }
 
     preview {
-      service_binding {
-        name = "CONFIGS"
-        service = cloudflare_worker_script.project_script.name
-      }
+      # service_binding {
+      #   name = "CONFIGS"
+      #   service = cloudflare_worker_script.project_script.name
+      # }
     }
   }
 }
