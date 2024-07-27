@@ -15,7 +15,7 @@ export const onRequest = async (context) => {
   const db = drizzle(context.env.CONFIGURATION);
   const config = sqliteTable("config", {
     code: varchar("code").notNull().primaryKey(),
-    value: varchar("code").notNull(),
+    code_value: varchar("code_value").notNull(),
     last_update_datetime: numeric("last_update_datetime").notNull(),
   });
 
@@ -27,9 +27,8 @@ export const onRequest = async (context) => {
       .from(config);
 
     for (const config of res) {
-      console.log(config);
       if (config_include_list.includes(config.code)) {
-        response_configs[config.code] = config.value;
+        response_configs[config.code] = config.code_value;
       }
     }
 
@@ -55,7 +54,7 @@ async function init(env) {
     await env.CONFIGURATION.prepare(
       `CREATE TABLE config (
       code varchar(64) PRIMARY KEY,
-      value varchar(256),
+      code_value varchar(256),
       last_update_datetime numeric)`
     ).run();
   } catch (e) {
