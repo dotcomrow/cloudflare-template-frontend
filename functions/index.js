@@ -7,6 +7,8 @@ export const onRequest = async (context) => {
   const asset = await context.env.ASSETS.fetch(url);
   var body = await asset.text();
 
+  console.log(context.env)
+  console.log(JSON.stringify(context.env.CONFIGS));
   body = body.replace(/{\"config\":\"config\"}/g, JSON.stringify(context.env.CONFIGS));
   // fetch config and inject
   // var logging_token = await new GCPAccessToken(
