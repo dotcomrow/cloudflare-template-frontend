@@ -5,6 +5,6 @@
                 "/*.js", 
                 "/*.svg",
                 "/*.webmanifest",
-                "/*.favicon"
+                "/*.ico"
             ]
  }
