@@ -46,7 +46,7 @@ resource "cloudflare_pages_project" "app" {
           LOG_NAME = "${var.project_name}_app_log"
           CONFIGS = <<EOT
           {
-            apiBase: "https://api-gateway.${var.domain}"
+            "apiBase": "https://api-gateway.${var.domain}"
           }
           EOT
         }
@@ -62,7 +62,7 @@ resource "cloudflare_pages_project" "app" {
           LOG_NAME = "${var.project_name}_app_log"
           CONFIGS = <<EOT
           {
-            apiBase: "https://api-gateway-dev.${var.domain}"
+            "apiBase": "https://api-gateway-dev.${var.domain}"
           }
           EOT
         }
