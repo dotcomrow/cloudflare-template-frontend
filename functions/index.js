@@ -27,6 +27,7 @@ export const onRequest = async (context) => {
       .from(config);
 
     for (const config of res) {
+      console.log(config);
       if (config_include_list.includes(config.code)) {
         response_configs[config.code] = config.value;
       }
