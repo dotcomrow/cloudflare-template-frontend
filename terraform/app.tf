@@ -46,6 +46,7 @@ resource "cloudflare_pages_project" "app" {
   build_config {
     build_command       = "npm install && npm run build"
     destination_dir     = "build"
+    build_caching       = true
   }
 
   deployment_configs {
