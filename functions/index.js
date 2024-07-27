@@ -6,11 +6,11 @@ export const onRequest = async (context) => {
   // if homepage
   console.log(url.pathname);
   const asset = await context.env.ASSETS.fetch(url);
+  console.log(Object.keys(asset));
   // fetch config and inject
   var logging_token = await new GCPAccessToken(
     context.env.GCP_LOGGING_CREDENTIALS
   ).getAccessToken("https://www.googleapis.com/auth/logging.write");
-  console.log(logging_token);
   await GCPLogger.logEntry(
     context.env.GCP_LOGGING_PROJECT_ID,
     logging_token.access_token,
