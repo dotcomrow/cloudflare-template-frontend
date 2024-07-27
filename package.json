@@ -35,7 +35,8 @@
     "npm-gcp-logging": "^1.0.53",
     "npm-gcp-bigquery": "^1.0.12",
     "npm-gcp-token": "^1.0.12",
-    "npm-gcp-userinfo": "^1.0.1"
+    "npm-gcp-userinfo": "^1.0.1",
+    "serialize-error": "^11.0.3"
   },
   "devDependencies": {
     "@babel/plugin-proposal-private-property-in-object": "^7.16.7",

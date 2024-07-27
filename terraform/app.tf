@@ -15,6 +15,16 @@ resource "cloudflare_record" "app" {
   allow_overwrite = true
 }
 
+resource "cloudflare_d1_database" "prod_configuration" {
+  account_id = var.cloudflare_account_id
+  name       = "${var.project_name}_prod_config_database"
+}
+
+resource "cloudflare_d1_database" "dev_configuration" {
+  account_id = var.cloudflare_account_id
+  name       = "${var.project_name}_dev_config_database"
+}
+
 resource "cloudflare_pages_project" "app" {
   account_id        = var.cloudflare_account_id
   name              = var.project_name
@@ -44,15 +54,14 @@ resource "cloudflare_pages_project" "app" {
         environment_variables = {
           GCP_LOGGING_PROJECT_ID = var.GCP_LOGGING_PROJECT_ID
           LOG_NAME = "${var.project_name}_app_log"
-          CONFIGS = <<EOT
-          {
-            "apiBase": "https://api-gateway.${var.domain}"
-          }
-          EOT
         }
 
         secrets = {
           GCP_LOGGING_CREDENTIALS = var.GCP_LOGGING_CREDENTIALS
+        }
+
+        d1_databases = {
+          CONFIGURATION = cloudflare_d1_database.prod_configuration.id
         }
     }
 
@@ -60,15 +69,14 @@ resource "cloudflare_pages_project" "app" {
       environment_variables = {
           GCP_LOGGING_PROJECT_ID = var.GCP_LOGGING_PROJECT_ID
           LOG_NAME = "${var.project_name}_app_log"
-          CONFIGS = <<EOT
-          {
-            "apiBase": "https://api-gateway-dev.${var.domain}"
-          }
-          EOT
         }
 
         secrets = {
           GCP_LOGGING_CREDENTIALS = var.GCP_LOGGING_CREDENTIALS
+        }
+
+        d1_databases = {
+          CONFIGURATION = cloudflare_d1_database.dev_configuration.id
         }
     }
   }
