@@ -36,7 +36,10 @@
     "npm-gcp-bigquery": "^1.0.12",
     "npm-gcp-token": "^1.0.12",
     "npm-gcp-userinfo": "^1.0.1",
-    "serialize-error": "^11.0.3"
+    "serialize-error": "^11.0.3",
+    "better-sqlite3": "^11.1.2",
+    "drizzle-kit": "^0.23.0",
+    "drizzle-orm": "^0.28.6"
   },
   "devDependencies": {
     "@babel/plugin-proposal-private-property-in-object": "^7.16.7",
