@@ -7,7 +7,7 @@ import store, { persistor } from "./common/store/store";
 import { Provider } from "react-redux";
 import axios from 'axios';
 
-axios.defaults.baseURL = window.CONFIGS.apiBase;
+axios.defaults.baseURL = JSON.parse(window.CONFIGS).apiBase;
 axios.defaults.headers.post['Content-Type'] = 'application/json';
 
 function renderToDOM() {
