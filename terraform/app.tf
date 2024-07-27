@@ -44,9 +44,11 @@ resource "cloudflare_pages_project" "app" {
         environment_variables = {
           GCP_LOGGING_PROJECT_ID = var.GCP_LOGGING_PROJECT_ID
           LOG_NAME = "${var.project_name}_app_log"
-          CONFIGS = {
+          CONFIGS = <<EOT
+          {
             apiBase: "https://api-gateway.${var.domain}"
           }
+          EOT
         }
 
         secrets = {
@@ -58,9 +60,11 @@ resource "cloudflare_pages_project" "app" {
       environment_variables = {
           GCP_LOGGING_PROJECT_ID = var.GCP_LOGGING_PROJECT_ID
           LOG_NAME = "${var.project_name}_app_log"
-          CONFIGS = {
+          CONFIGS = <<EOT
+          {
             apiBase: "https://api-gateway-dev.${var.domain}"
           }
+          EOT
         }
 
         secrets = {
