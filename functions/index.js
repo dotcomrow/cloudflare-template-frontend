@@ -5,7 +5,7 @@ import { sqliteTable } from "drizzle-orm/sqlite-core";
 import { numeric, varchar } from "drizzle-orm/pg-core";
 import { drizzle } from "drizzle-orm/d1";
 
-const config_include_list = ["apiBase"]
+const config_include_list = ["apiBase"];
 
 export const onRequest = async (context) => {
   const url = new URL(context.request.url);
@@ -20,11 +20,8 @@ export const onRequest = async (context) => {
   });
 
   try {
-
     var response_configs = {};
-    var res = await db
-      .select()
-      .from(config);
+    var res = await db.select().from(config);
 
     for (const config of res) {
       if (config_include_list.includes(config.code)) {
@@ -41,12 +38,17 @@ export const onRequest = async (context) => {
   } catch (error) {
     await init(context.env);
   }
-  return new Response(JSON.stringify({
-    message: "Configuration missing!"
-  }), {
-    status: 404,
-    statusText: "Configuration missing!",
-  });
+  return new Response(
+    JSON.stringify({
+      message: "Configuration missing!",
+    }),
+    {
+      status: 400,
+      headers: {
+        "content-type": "application/json",
+      },
+    }
+  );
 };
 
 async function init(env) {
