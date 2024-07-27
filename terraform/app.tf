@@ -44,6 +44,9 @@ resource "cloudflare_pages_project" "app" {
         environment_variables = {
           GCP_LOGGING_PROJECT_ID = var.GCP_LOGGING_PROJECT_ID
           LOG_NAME = "${var.project_name}_app_log"
+          CONFIGS = {
+            apiBase: "https://api-gateway.${var.domain}"
+          }
         }
 
         secrets = {
@@ -52,7 +55,17 @@ resource "cloudflare_pages_project" "app" {
     }
 
     preview {
+      environment_variables = {
+          GCP_LOGGING_PROJECT_ID = var.GCP_LOGGING_PROJECT_ID
+          LOG_NAME = "${var.project_name}_app_log"
+          CONFIGS = {
+            apiBase: "https://api-gateway-dev.${var.domain}"
+          }
+        }
 
+        secrets = {
+          GCP_LOGGING_CREDENTIALS = var.GCP_LOGGING_CREDENTIALS
+        }
     }
   }
 }
