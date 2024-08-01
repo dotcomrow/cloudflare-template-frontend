@@ -1,6 +1,6 @@
 import React from "react";
 
-export const displayError = ({ title, detailMessage, detail, error }) => {
+export const displayError = ({ title, detail, error }) => {
   return (
     <div className="col-12 pt-5 pb-5">
       <div className="tile container-fluid col-4 module-container">
@@ -8,7 +8,7 @@ export const displayError = ({ title, detailMessage, detail, error }) => {
           <div>
             <h1>{title ? title : "Something went wrong!"}</h1>
             <p>
-              {detailMessage ? detailMessage : "We are working hard to fix it....please come back again a bit later"}
+              {detail ? detail : "We are working hard to fix it....please come back again a bit later"}
             </p>
             <p>{error.message ? "Exception: " + error.message : ""}</p>
             <p>{error.stack ? "Traceback: " + error.stack: ""}</p>

@@ -89,9 +89,10 @@ const Main = function Layout() {
             if (localStorage.getItem(ERROR)) {
                 var e = JSON.parse(localStorage.getItem(ERROR));
                 displaySiteError({
-                    error: e.error,
-                    stack: null,
-                    message: null,
+                    error: {
+                        stack: null,
+                        message: e.error
+                    },
                     title: "Login Error",
                     detail: "Authentication is required.  Please choose an account to continue."
                 });
@@ -127,9 +128,7 @@ const Main = function Layout() {
             dispatch(loginUser()).catch((err) => {
                 var e = JSON.parse(localStorage.getItem(ERROR));
                 displaySiteError({
-                    error: "Error",
-                    stack: err,
-                    message: null,
+                    error: err,
                     title: "Something went wrong!",
                     detail: "An error occurred during authentication, please try again."
                 });
@@ -166,9 +165,10 @@ const Main = function Layout() {
         if (localStorage.getItem(ERROR)) {
             var e = JSON.parse(localStorage.getItem(ERROR));
             displaySiteError({
-                error: e.error,
-                stack: null,
-                message: null,
+                error: {
+                    stack: null,
+                    message: e.error
+                },
                 title: "Login Error",
                 detail: "Authentication is required.  Please choose an account to continue."
             });
