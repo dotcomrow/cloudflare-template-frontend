@@ -1,6 +1,6 @@
 import React from "react";
 
-export const displayError = ({ detail, error, title, detailMessage }) => {
+export const displayError = ({ title, detailMessage, detail, error }) => {
   return (
     <div className="col-12 pt-5 pb-5">
       <div className="tile container-fluid col-4 module-container">
@@ -12,7 +12,6 @@ export const displayError = ({ detail, error, title, detailMessage }) => {
             </p>
             <p>{error.message ? "Exception: " + error.message : ""}</p>
             <p>{error.stack ? "Traceback: " + error.stack: ""}</p>
-            <p>{detail ? "Detail: " + detail : ""}</p>
             <p>
               Click <a href="#" onClick={
                 (e) => {

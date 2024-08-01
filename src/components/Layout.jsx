@@ -74,12 +74,12 @@ const Main = function Layout() {
     const displaySiteError = (errorObj) => {
         setPageLoader(false);
         setSiteException({
-            detail: errorObj.error, error: {
+            error: {
                 message: errorObj.message,
                 stack: errorObj.stack
             },
             title: errorObj.title,
-            detailMessage: errorObj.detailMessage
+            detailMessage: errorObj.detail
         });
         setSiteError(true);
     }
@@ -93,7 +93,7 @@ const Main = function Layout() {
                     stack: null,
                     message: null,
                     title: "Login Error",
-                    detailMessage: "Authentication is required.  Please choose an account to continue."
+                    detail: "Authentication is required.  Please choose an account to continue."
                 });
                 localStorage.removeItem(ERROR);
             } else {
@@ -131,7 +131,7 @@ const Main = function Layout() {
                     stack: err,
                     message: null,
                     title: "Something went wrong!",
-                    detailMessage: "An error occurred during authentication, please try again."
+                    detail: "An error occurred during authentication, please try again."
                 });
                 localStorage.removeItem(ERROR);
             });
@@ -170,7 +170,7 @@ const Main = function Layout() {
                 stack: null,
                 message: null,
                 title: "Login Error",
-                detailMessage: "Authentication is required.  Please choose an account to continue."
+                detail: "Authentication is required.  Please choose an account to continue."
             });
             localStorage.removeItem(ERROR);
         }

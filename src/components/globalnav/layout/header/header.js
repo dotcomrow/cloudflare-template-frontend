@@ -82,59 +82,11 @@ const Header = () => {
 
   return window.location.href.indexOf("error") > -1 ? null : (
     <header className="navigation pt-0 navbar navbar-default">
-      {/* <div
-        className={`${
-          showFlyout ? "position-relative" : ""
-        } page-container navigation-container d-flex justify-content-between mobile-header-temporary`}
-        style={{ zIndex: 800 }}
-      >
-        <div className="d-flex align-items-center ps-5">
-          <div className="nav-menu flex-column">
-            <div className="nav-menu-item">
-              <button
-                className="btn btn-link nav-link text-white text-decoration-none"
-                onClick={() => setShowFlyout(!showFlyout)}
-              >
-                <i className="fas fa-bars"></i>
-              </button>
-            </div>
-          </div>
-          <div className="d-flex align-items-end">
-            <Link className="text-decoration-none text-white logo-image" to="/">
-              <embed
-                src="/armada.svg"
-                alt="logo"
-                style={{
-                  height: "4rem",
-                  width: "4rem",
-                  "border-radius": "50%",
-                  overflow: "hidden",
-                }}
-              />
-            </Link>
-            <h5 className="fw-bold text-nowrap live-text-box">
-              <Link
-                className="text-decoration-none ms-4 link-secondary live-text-link text-white"
-                to="/home"
-              >
-                Armada
-                <sup className="fw-bold me-2 live-text-superscript">TM</sup>
-              </Link>
-            </h5>
-          </div>
-        </div>
-      </div> */}
       <div className="navigation-container d-flex justify-content-between">
         <div className="d-flex align-items-center ps-2">
           <div className="d-flex align-items-end">
             <h5 className="fw-bold text-nowrap live-text-box">
-              {/* <Link
-                className="text-decoration-none link-secondary live-text-link text-white"
-                to="/home"
-              >
-                Armada
-              </Link> */}
-              {/* <Icon glyph="List" fill="#FF0000" /> */}
+
             </h5>
           </div>
         </div>
