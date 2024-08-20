@@ -74,12 +74,12 @@ const Main = function Layout() {
     const displaySiteError = (errorObj) => {
         setPageLoader(false);
         setSiteException({
-            detail: errorObj.error, error: {
+            error: {
                 message: errorObj.message,
                 stack: errorObj.stack
             },
             title: errorObj.title,
-            detailMessage: errorObj.detailMessage
+            detailMessage: errorObj.detail
         });
         setSiteError(true);
     }
@@ -89,11 +89,12 @@ const Main = function Layout() {
             if (localStorage.getItem(ERROR)) {
                 var e = JSON.parse(localStorage.getItem(ERROR));
                 displaySiteError({
-                    error: e.error,
-                    stack: null,
-                    message: null,
+                    error: {
+                        stack: null,
+                        message: e.error
+                    },
                     title: "Login Error",
-                    detailMessage: "Authentication is required.  Please choose an account to continue."
+                    detail: "Authentication is required.  Please choose an account to continue."
                 });
                 localStorage.removeItem(ERROR);
             } else {
@@ -127,11 +128,9 @@ const Main = function Layout() {
             dispatch(loginUser()).catch((err) => {
                 var e = JSON.parse(localStorage.getItem(ERROR));
                 displaySiteError({
-                    error: "Error",
-                    stack: err,
-                    message: null,
+                    error: err,
                     title: "Something went wrong!",
-                    detailMessage: "An error occurred during authentication, please try again."
+                    detail: "An error occurred during authentication, please try again."
                 });
                 localStorage.removeItem(ERROR);
             });
@@ -166,11 +165,12 @@ const Main = function Layout() {
         if (localStorage.getItem(ERROR)) {
             var e = JSON.parse(localStorage.getItem(ERROR));
             displaySiteError({
-                error: e.error,
-                stack: null,
-                message: null,
+                error: {
+                    stack: null,
+                    message: e.error
+                },
                 title: "Login Error",
-                detailMessage: "Authentication is required.  Please choose an account to continue."
+                detail: "Authentication is required.  Please choose an account to continue."
             });
             localStorage.removeItem(ERROR);
         }

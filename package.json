@@ -72,6 +72,6 @@
     "build": "webpack --env ENVIRONMENT=production --config config/webpack.prod.js && node --preserve-symlinks --preserve-symlinks-main ./package",
     "test": "jest --coverage",
     "clean": "rm -rf node_modules && rm -rf package-lock.json && rm -rf build && rm -rf build",
-    "local": "webpack serve --env ENVIRONMENT=production --config config/webpack.prod.js --open --mode production --live-reload --hot && node --preserve-symlinks --preserve-symlinks-main ./package"
+    "local": "npx wrangler pages dev build"
   }
 }
