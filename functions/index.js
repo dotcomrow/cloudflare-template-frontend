@@ -8,6 +8,15 @@ import { drizzle } from "drizzle-orm/d1";
 const config_include_list = ["apiBase"];
 
 export const onRequest = async (context) => {
+
+  body = body.replace(
+    /{\"config\":\"config\"}/g,
+    JSON.stringify(response_configs)
+  );
+
+  return new Response(body, asset);
+
+  
   const url = new URL(context.request.url);
   const asset = await context.env.ASSETS.fetch(url);
   var body = await asset.text();
