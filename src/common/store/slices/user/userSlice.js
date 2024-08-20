@@ -2,7 +2,7 @@ import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 import { STATE, ERROR } from "../../../utilities/constants";
 
-let preferencesUrl = "nodejs-cloudflare-service-template";
+let preferencesUrl = "https://api-gateway.dev.suncoast.systems/nodejs-cloudflare-service-template";
 let googleAuthUrl = "https://accounts.google.com/o/oauth2/v2/auth";
 let googleProfileUrl =
   "https://www.googleapis.com/oauth2/v1/userinfo?alt=json&access_token=";
