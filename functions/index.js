@@ -18,7 +18,7 @@ export const onRequest = async (context) => {
     JSON.stringify(response_configs)
   );
 
-  return new Response(body, asset);
+  return new Response(body, asset1);
 
 
   const url = new URL(context.request.url);
