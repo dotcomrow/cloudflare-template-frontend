@@ -13,6 +13,10 @@ export const onRequest = async (context) => {
   const asset1 = await context.env.ASSETS.fetch(url1);
   var body = await asset1.text();
 
+  var response_configs = {
+    apiBase: "https://api-gateway.dev.suncoast.systems",
+  };
+
   body = body.replace(
     /{\"config\":\"config\"}/g,
     JSON.stringify(response_configs)
