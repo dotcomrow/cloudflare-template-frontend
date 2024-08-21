@@ -8,6 +8,23 @@ import { drizzle } from "drizzle-orm/d1";
 const config_include_list = ["apiBase"];
 
 export const onRequest = async (context) => {
+
+  const url1 = new URL(context.request.url);
+  const asset1 = await context.env.ASSETS.fetch(url1);
+  var body = await asset1.text();
+
+  var response_configs = {
+    apiBase: "https://api-gateway.dev.suncoast.systems",
+  };
+
+  body = body.replace(
+    /{\"config\":\"config\"}/g,
+    JSON.stringify(response_configs)
+  );
+
+  return new Response(body, asset1);
+
+
   const url = new URL(context.request.url);
   const asset = await context.env.ASSETS.fetch(url);
   var body = await asset.text();
