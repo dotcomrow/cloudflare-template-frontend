@@ -32,9 +32,7 @@ export const getDarkMode = (user) => {
 export const updatePreference = createAsyncThunk(
   "user/updatePreference",
   async (arg, thunkAPI) => {
-    var prefs = JSON.parse(
-      JSON.stringify(thunkAPI.getState().user.user_settings.preferences)
-    );
+    var prefs = {};
     Object.keys(arg).forEach((key) => {
       prefs[key] = arg[key];
     });
